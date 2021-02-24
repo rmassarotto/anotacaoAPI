@@ -1,0 +1,8 @@
+{
+  "name": "anotacaoAPI",
+  "version": "1.0.0",
+  "description": "Atividade da disciplina de Prog. Web2",
+  "main": "app.js",
+  "author": "Rodrigo Massarotto de Oliveira",
+  "license": "MIT"
+}
