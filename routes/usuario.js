@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const usuario = require('../controller/usuario')
+// const database = require('../models')
 const router = Router()
 
 router.get('/', (req, res) => {

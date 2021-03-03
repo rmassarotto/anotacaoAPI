@@ -3,7 +3,7 @@ const database = {};
 
 const options = {
   username: 'postgres',
-  password: 'postgres',
+  password: '4093047',
   host: 'localhost',
   dialect: 'postgres'
 };
@@ -14,6 +14,6 @@ sequelize.authenticate()
   .then(() => console.log(`CONNECTION SUCCESS: ${options.database}`))
   .catch((error) => console.log(`CONNECTION ERROR: ${error}`))
 
-  database.sequelize = sequelize
-  
-  module.exports = database
+database.sequelize = sequelize
+
+module.exports = database

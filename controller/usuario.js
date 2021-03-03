@@ -1,4 +1,5 @@
 const controller = {}
+const database = require('../models');
 
 controller.getUsuarios = () => {
   return [
@@ -7,3 +8,5 @@ controller.getUsuarios = () => {
     }
   ]
 }
+
+module.exports = controller;
