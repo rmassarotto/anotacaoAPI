@@ -1,20 +1,50 @@
-const express = require('express');
-const router = express.Router()
+const { Router } = require('express');
+const router = Router()
+const defaultController = require('../controller/default');
+const { Tag } = require('../models');
 
-router.get('/', (req, res) => {
-  res.send('GET')
+router.get('/:id?', async (req, res) => {
+  const { id } = req.params;
+
+  const tag = await defaultController.get(id, Tag)
+  res.send(tag || [])
 });
 
-router.post('/', (req, res) => {
-  res.send('POST')
+router.post('/', async (req, res) => {
+  try {
+    const { body } = req
+
+    const tag = await defaultController.save(body, Tag);
+
+    res.send(tag)
+  } catch (error) {
+    res.status(500).send({ error })
+  }
 });
 
-router.put('/', (req, res) => {
-  res.send('PUT')
+router.put('/:id', async (req, res) => {
+  try {
+    const { body } = req;
+    const { id } = req.params
+
+    const tag = await defaultController.edit(id, body, Tag)
+
+    res.send(tag);
+  } catch (error) {
+    res.status(500).send({ error })
+  }
 });
 
-router.delete('/', (req, res) => {
-  res.send('DELETE')
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    await defaultController.delete(id, Tag);
+
+    res.send(id)
+  } catch (error) {
+    res.status(500).send({ error })
+  }
 });
 
 module.exports = router

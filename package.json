@@ -6,10 +6,13 @@
   "author": "Rodrigo Massarotto de Oliveira",
   "license": "MIT",
   "scripts": {
+    "startdev": "cross-env NODE_ENV=development nodemon app.js",
+    "startprod": "cross-env NODE_ENV=production nodemon app.js",
     "start": "nodemon app.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "nodemon": "^2.0.7",
     "pg": "^8.5.1",
