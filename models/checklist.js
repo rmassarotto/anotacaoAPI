@@ -1,30 +1,36 @@
 module.exports = function (sequelize, DataTypes) {
-  const Checklist = sequelize.define('checklist',
+  const Checklist = sequelize.define(
+    'checklist',
     {
       id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
       },
       notaId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'nota',
+          key: 'id',
+        },
       },
       descricao: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.TEXT,
+        allowNull: false,
       },
       concluida: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-      }
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
     },
     {
       tableName: 'checklist',
-      timestamps: false
+      timestamps: false,
     }
   );
 
   return Checklist;
-}
+};

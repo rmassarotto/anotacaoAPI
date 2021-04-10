@@ -1,20 +1,32 @@
 const { Router } = require('express');
-const router = Router()
+const router = Router();
 const defaultController = require('../controller/default');
+const notaController = require('../controller/notas');
 const { Nota } = require('../models');
 
 router.get('/:id?', async (req, res) => {
   const { id } = req.params;
 
-  const nota = await defaultController.get(id, Nota)
+  const nota = await notaController.getById(id)
   res.send(nota || [])
 });
+
+router.get('/usuario/:usuarioId', async (req, res) => {
+  const { usuarioId } = req.params;
+  const { tag } = req.query;
+
+  console.log(req.query);
+
+  const notas = await notaController.getByUsuarioId(usuarioId, tag);
+
+  res.send(notas || []);
+})
 
 router.post('/', async (req, res) => {
   try {
     const { body } = req
 
-    const nota = await defaultController.save(body, Nota);
+    const nota = await notaController.save(body);
 
     res.send(nota)
   } catch (error) {
@@ -22,12 +34,12 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:usuarioId/:notaId', async (req, res) => {
   try {
     const { body } = req;
-    const { id } = req.params
+    const { usuarioId, notaId } = req.params
 
-    const nota = await defaultController.edit(id, body, Nota)
+    const nota = await notaController.edit(usuarioId, notaId, body)
 
     res.send(nota);
   } catch (error) {

@@ -1,0 +1,4 @@
+{
+  "secret": "segredo",
+  "saltRounds": "10"
+}

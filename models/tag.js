@@ -1,26 +1,29 @@
 module.exports = function (sequelize, DataTypes) {
-  const Tag = sequelize.define('tag',
+  return sequelize.define(
+    'tag',
     {
       id: {
+        autoIncrement: true,
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
       },
       notaId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'nota',
+          key: 'id',
+        },
       },
       nome: {
-        type: DataTypes.STRING,
-        allowNull: false
-      }
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
     },
     {
       tableName: 'tag',
-      timestamps: false
+      timestamps: false,
     }
   );
-
-  return Tag;
-}
+};
