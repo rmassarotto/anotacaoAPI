@@ -1,21 +1,38 @@
 const controller = {}
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config/security')
 const { Usuario } = require('../models');
-// const database = require('../models');
 
 controller.login = async (email, senha) => {
   try {
-    const usuario = await Usuario.findOne({ where: { email } });
+    const usuario = await Usuario.scope('login').findOne({ where: { email } });
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
-    if (usuario.senha != senha) return false;
+    if (!senhaCorreta) return false;
+    // if (senha != usuario.senha) return false;
 
-    return jwt.sign({ id: usuario.id }, secret, { expiresIn: '24h' })
-
+    return jwt.sign({ id: usuario.id }, secret, {
+      expiresIn: '24h',
+    });
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
-}
+};
+
+controller.register = async (novoUsuario) => {
+  try {
+    const usuario = await Usuario.findOne({ where: { email: novoUsuario.email } });
+
+    if (usuario) return 302;
+
+    return Usuario.create(novoUsuario);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
 
 controller.getUsuarios = async (id = null) => {
   let result = []

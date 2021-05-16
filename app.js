@@ -4,18 +4,27 @@ const fs = require('fs');
 const https = require('https');
 const app = express();
 const port = 3005;
-const portHttps = 443;
+const portHttps = 4443;
+const cors = require('cors');
 
 const login = require('./routes/login');
+const register = require('./routes/register');
 const usuario = require('./routes/usuario');
 const nota = require('./routes/nota');
 const tag = require('./routes/tag');
 const checklist = require('./routes/checklist');
 const auth = require('./middleware/auth')
 
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+  })
+);
+
 app.use(bodyParser.json());
 
 app.use('/login', login)
+app.use('/register', register)
 // app.use(auth)
 app.use('/usuario', usuario)
 app.use('/nota', nota)
@@ -29,9 +38,9 @@ const credentials = { key, cert }
 
 httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(portHttps, () => {
-  console.log(`Running in https://localhost:${portHttps}`);
-})
+// httpsServer.listen(portHttps, () => {
+//   console.log(`Running in https://localhost:${portHttps}`);
+// })
 
 app.listen(port, () => {
   console.log(`Running in http://localhost:${port}`);
