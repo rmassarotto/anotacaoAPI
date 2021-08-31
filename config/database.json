@@ -1,14 +1,14 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "4093047",
-    "host": "localhost",
+    "username": "",
+    "password": "",
+    "host": "",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "4093047",
-    "host": "localhost",
+    "username": "",
+    "password": "",
+    "host": "",
     "dialect": "postgres"
   }
 }
